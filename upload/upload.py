@@ -28,20 +28,6 @@ def twitter_setup():
 
     return api
 
-# Setup
-api = twitter_setup()
-# # searchQuery: str = '@Ssnyder1835'
-# retweet_filter: str = '-filter:retweets'
-# q=searchQuery+retweet_filter
-# tweetsPerQry: int = 100
-# fName: str = 'tweets1.json'
-# tweetCount: int = 0
-# max_id = -1
-# maxTweets: int = 101
-# sinceId = None
-
-
-
 def upload_tweets(api, searchQuery: str, ) -> None:
     ''' Connects uploads the tweets to mongodb give query
     
@@ -89,6 +75,8 @@ def upload_tweets(api, searchQuery: str, ) -> None:
             print("some error : " + str(e))
             break
 
+# Setup
+api = twitter_setup()
 for searchQuery in queries:
     print(f'Tweets for {searchQuery}')
     upload_tweets(api, searchQuery)
