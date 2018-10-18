@@ -13,7 +13,7 @@ def clean_tweet(tweet: str) -> str:
     return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
 
 
-def analize_sentiment(tweet: str) -> int:
+def analyze_sentiment(tweet: str) -> int:
     '''
     Utility function to classify the polarity of a tweet
     using textblob.

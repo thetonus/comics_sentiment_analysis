@@ -17,9 +17,9 @@ client = MongoClient(os.getenv('MONGODB_URI'))
 mongo = client.heroku_v6ds7xrr
 
 mongo_connections = {
-    '@TomKingTK': mongo.t_king,
-    '@Ssnyder1835': mongo.s_snyder,
-    '@JamesTheFourth': mongo.j_t4,
-    '@Joelle_Jones': mongo.j_jones,
-    '@geoffjohns': mongo.g_johns,
+    'TomKingTK': mongo.t_king,
+    'Ssnyder1835': mongo.s_snyder,
+    'JamesTheFourth': mongo.j_t4,
+    'Joelle_Jones': mongo.j_jones,
+    'geoffjohns': mongo.g_johns,
 }

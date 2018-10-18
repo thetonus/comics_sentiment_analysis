@@ -1,47 +1,45 @@
-# General:
-import tweepy           # To consume Twitter's API
-import pandas as pd     # To handle data
-import numpy as np      # For number computing
+''' Upload tweets of that mention certain comics creators '''
+import tweepy
 
-import sys
-import os
 from settings import mongo_connections, twitter_credentials
 from queries import queries
 
-# API's setup:
-def twitter_setup():
+
+def twitter_setup() -> None:
     """
     Utility function to setup the Twitter's API
     with our access keys provided.
     """
 
     # Authentication and access using keys:
-
-    auth = tweepy.AppAuthHandler(twitter_credentials["CONSUMER_KEY"], twitter_credentials["CONSUMER_SECRET"])
+    auth = tweepy.AppAuthHandler(
+        twitter_credentials["CONSUMER_KEY"], twitter_credentials["CONSUMER_SECRET"])
     auth.secure = True
     api = tweepy.API(auth, wait_on_rate_limit=True,
-                    wait_on_rate_limit_notify=True)
+                     wait_on_rate_limit_notify=True)
 
     if (not api):
-        print ("Can't Authenticate")
+        import sys
+        print("Can't Authenticate")
         sys.exit(-1)
 
     return api
 
+
 def upload_tweets(api, searchQuery: str, ) -> None:
     ''' Connects uploads the tweets to mongodb give query
-    
+
     args
         str - searchQuery: search parameter    
     '''
-    # searchQuery: str = '@Ssnyder1835'
+
+    # Initialize
     retweet_filter: str = '-filter:retweets'
-    q=searchQuery+retweet_filter
+    q = searchQuery+retweet_filter
     tweetsPerQry: int = 100
-    fName: str = 'tweets1.json'
     tweetCount: int = 0
     max_id = -1
-    maxTweets: int = 101
+    maxTweets: int = 1000
     sinceId = None
     conn = mongo_connections[searchQuery]
 
@@ -65,18 +63,18 @@ def upload_tweets(api, searchQuery: str, ) -> None:
                 print("No more tweets found")
                 break
             for tweet in new_tweets:
-                # f.write(json.dumps(tweet._json))
                 conn.insert_one(tweet._json)
             tweetCount += len(new_tweets)
-            print("Downloaded {0} tweets".format(tweetCount))
+            print(f"Downloaded {tweetCount} tweets")
             max_id = new_tweets[-1].id
         except tweepy.TweepError as e:
             # Just exit if any error
             print("some error : " + str(e))
             break
 
+
 # Setup
 api = twitter_setup()
 for searchQuery in queries:
-    print(f'Tweets for {searchQuery}')
+    print('Tweets for @'+f'{searchQuery}')
     upload_tweets(api, searchQuery)
