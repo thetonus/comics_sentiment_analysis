@@ -1,3 +1,4 @@
+''' Getting credentials and initializing connections '''
 import os
 from dotenv import load_dotenv, find_dotenv
 from pymongo import MongoClient
@@ -21,5 +22,6 @@ mongo_connections = {
     'Ssnyder1835': mongo.s_snyder,
     'JamesTheFourth': mongo.j_t4,
     'Joelle_Jones': mongo.j_jones,
+    'geoffjohns': mongo.g_johns,
     'geoffjohns': mongo.g_johns,
 }

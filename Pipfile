@@ -19,6 +19,7 @@ falcon = "*"
 ujson = "*"
 cython = "*"
 gunicorn = "*"
+pytest = "*"
 
 [dev-packages]
 

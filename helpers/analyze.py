@@ -26,16 +26,3 @@ def analyze_sentiment(tweet: str) -> int:
     else:
         return -1
 
-
-def validate_creator(creator: str) -> bool:
-    ''' Validate creator
-
-    args
-        str - creator twitter handle
-
-    return 
-        bool - if creator is in set of twitter handles '''
-
-    if creator in queries:
-        return True
-    return False

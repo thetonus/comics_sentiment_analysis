@@ -3,9 +3,10 @@ import tweepy
 
 from settings import mongo_connections, twitter_credentials
 from queries import queries
+from exceptions import TweepyConnectionException
 
 
-def twitter_setup() -> None:
+def twitter_setup():
     """
     Utility function to setup the Twitter's API
     with our access keys provided.
@@ -17,11 +18,6 @@ def twitter_setup() -> None:
     auth.secure = True
     api = tweepy.API(auth, wait_on_rate_limit=True,
                      wait_on_rate_limit_notify=True)
-
-    if (not api):
-        import sys
-        print("Can't Authenticate")
-        sys.exit(-1)
 
     return api
 

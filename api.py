@@ -2,8 +2,7 @@
 import json
 import falcon
 
-from application import app
-from helpers import validate_creator
+from analysis.application import app
 from queries import queries
 
 class TwitterSentiment(object):

@@ -1,10 +1,11 @@
 ''' Main guts of sentiment analysis '''
 import numpy as np
 import pandas as pd
+
 from typing import Tuple
 from settings import mongo_connections
 from queries import queries
-from helpers import analyze_sentiment
+from helpers.analyze import analyze_sentiment
 
 def app(handle: str) -> Tuple:
     ''' Connect to mongodb to get tweets about creator and declare what if their tweets are positive, neutral, or negative
