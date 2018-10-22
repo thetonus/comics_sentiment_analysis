@@ -16,6 +16,7 @@ def app(handle: str) -> Tuple:
     returns
         tuple - Returns twitter handle, and positive, neutral, and negative percentages of tweets
     '''
+    
     conn = mongo_connections[handle]
 
     tweet_text = [txt for txt in conn.find()]
