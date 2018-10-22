@@ -17,11 +17,11 @@ twitter_credentials = {
 client = MongoClient(os.getenv('MONGODB_URI'))
 mongo = client.heroku_v6ds7xrr
 
-mongo_connections = {
-    'TomKingTK': mongo.t_king,
-    'Ssnyder1835': mongo.s_snyder,
-    'JamesTheFourth': mongo.j_t4,
-    'Joelle_Jones': mongo.j_jones,
-    'geoffjohns': mongo.g_johns,
+mongo_connections= {
+    'Tom King': mongo.t_king,
+    'Scott Snyder': mongo.s_snyder,
+    'James Tynion': mongo.j_t4,
+    'Joelle Jones': mongo.j_jones,
+    'Geoff Johns': mongo.g_johns,
     'test': mongo.test,
 }

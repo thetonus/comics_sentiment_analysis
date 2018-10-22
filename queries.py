@@ -1,8 +1,8 @@
 ''' Twitter Handles to Query '''
 queries = set([
-    'TomKingTK',
-    'Ssnyder1835',
-    'JamesTheFourth',
-    'Joelle_Jones',
-    'geoffjohns'
+    'Tom King',
+    'Scott Snyder',
+    'James Tynion',
+    'Joelle Jones',
+    'Geoff Johns'
 ]) 

@@ -18,7 +18,7 @@ def app(handle: str) -> Tuple:
     '''
     conn = mongo_connections[handle]
 
-    tweet_text = [{'text': doc['text']} for doc in conn.find()]
+    tweet_text = [txt for txt in conn.find()]
     df = pd.DataFrame(tweet_text)
     del tweet_text # Save memory by getting rid of big list
 

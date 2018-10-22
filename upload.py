@@ -1,6 +1,7 @@
 ''' Upload tweets of that mention certain comics creators '''
 import tweepy
 
+from helpers.upload import get_tweet
 from settings import mongo_connections, twitter_credentials
 from queries import queries
 
@@ -38,10 +39,9 @@ def upload_tweets(api, searchQuery: str, ) -> None:
     tweetsPerQry: int = 100
     tweetCount: int = 0
     max_id = -1
-    maxTweets: int = 300
+    maxTweets: int = 1000
     sinceId = None
     conn = mongo_connections[searchQuery]
-    # conn = mongo_connections['test']
 
     while tweetCount < maxTweets:
         try:
@@ -64,7 +64,7 @@ def upload_tweets(api, searchQuery: str, ) -> None:
                 break
             for tweet in new_tweets:
             # Upload to MongoDB collection
-                conn.insert_one(tweet._json)
+                conn.insert_one({'text': get_tweet(tweet._json)})
             tweetCount += len(new_tweets)
             print(f"Downloaded {tweetCount} tweets")
             max_id = new_tweets[-1].id
@@ -79,12 +79,6 @@ api = twitter_setup()
 
 print('Beginning Upload')
 for searchQuery in queries:
-    print('Tweets for @'+f'{searchQuery}')
+    print(f'Tweets for '{searchQuery}')
     upload_tweets(api, searchQuery)
 print('Upload Complete')
-
-# print('Beginning Upload')
-# searchQuery = 'Tom King'
-# print('Tweets for @'+f'{searchQuery}')
-# upload_tweets(api, searchQuery)
-# print('Upload Complete')
