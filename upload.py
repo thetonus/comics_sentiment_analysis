@@ -3,13 +3,16 @@ import tweepy
 
 from settings import mongo_connections, twitter_credentials
 from queries import queries
-from exceptions import TweepyConnectionException
 
 
 def twitter_setup():
     """
     Utility function to setup the Twitter's API
     with our access keys provided.
+
+    returns
+        tweepy.Api instance
+
     """
 
     # Authentication and access using keys:
@@ -35,20 +38,21 @@ def upload_tweets(api, searchQuery: str, ) -> None:
     tweetsPerQry: int = 100
     tweetCount: int = 0
     max_id = -1
-    maxTweets: int = 1000
+    maxTweets: int = 300
     sinceId = None
     conn = mongo_connections[searchQuery]
+    # conn = mongo_connections['test']
 
     while tweetCount < maxTweets:
         try:
-            if (max_id <= 0):
-                if (not sinceId):
+            if max_id <= 0:
+                if not sinceId:
                     new_tweets = api.search(q=searchQuery, count=tweetsPerQry)
                 else:
                     new_tweets = api.search(q=searchQuery, count=tweetsPerQry,
                                             since_id=sinceId)
             else:
-                if (not sinceId):
+                if not sinceId:
                     new_tweets = api.search(q=searchQuery, count=tweetsPerQry,
                                             max_id=str(max_id - 1))
                 else:
@@ -59,6 +63,7 @@ def upload_tweets(api, searchQuery: str, ) -> None:
                 print("No more tweets found")
                 break
             for tweet in new_tweets:
+            # Upload to MongoDB collection
                 conn.insert_one(tweet._json)
             tweetCount += len(new_tweets)
             print(f"Downloaded {tweetCount} tweets")
@@ -69,8 +74,17 @@ def upload_tweets(api, searchQuery: str, ) -> None:
             break
 
 
-# Setup
+# Upload tweets
 api = twitter_setup()
+
+print('Beginning Upload')
 for searchQuery in queries:
     print('Tweets for @'+f'{searchQuery}')
     upload_tweets(api, searchQuery)
+print('Upload Complete')
+
+# print('Beginning Upload')
+# searchQuery = 'Tom King'
+# print('Tweets for @'+f'{searchQuery}')
+# upload_tweets(api, searchQuery)
+# print('Upload Complete')

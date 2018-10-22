@@ -23,5 +23,5 @@ mongo_connections = {
     'JamesTheFourth': mongo.j_t4,
     'Joelle_Jones': mongo.j_jones,
     'geoffjohns': mongo.g_johns,
-    'geoffjohns': mongo.g_johns,
+    'test': mongo.test,
 }
