@@ -1,6 +1,4 @@
 ''' Main guts of sentiment analysis '''
-import numpy as np
-import pandas as pd
 
 from typing import Tuple
 from settings import mongo_connections
@@ -20,20 +18,20 @@ def app(handle: str) -> Tuple:
 
     conn = mongo_connections[handle]
 
-    df = pd.DataFrame([txt for txt in conn.find()])
+    tweets = [doc['text'] for doc in conn.find()]
 
     # We create a column with the result of the analysis:
-    df['SA'] = np.array([analyze_sentiment(tweet) for tweet in df['text']])
+    sentiment_scores = list(map(analyze_sentiment, tweets))
 
     # We construct lists with classified tweets:
     pos_tweets = [tweet for index, tweet in enumerate(
-        df['text']) if df['SA'][index] > 0]
+        tweets) if sentiment_scores[index] > 0]
     neu_tweets = [tweet for index, tweet in enumerate(
-        df['text']) if df['SA'][index] == 0]
+        tweets) if sentiment_scores[index] == 0]
     neg_tweets = [tweet for index, tweet in enumerate(
-        df['text']) if df['SA'][index] < 0]
+        tweets) if sentiment_scores[index] < 0]
 
-    length = len(df['text'])
+    length = len(tweets)
     pos_percent = len(pos_tweets)*100/length
     neu_percent = len(neu_tweets)*100/length
     neg_percent = len(neg_tweets)*100/length
