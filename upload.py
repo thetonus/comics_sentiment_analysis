@@ -39,7 +39,7 @@ def upload_tweets(api, searchQuery: str, ) -> None:
     tweetsPerQry: int = 100
     tweetCount: int = 0
     max_id = -1
-    maxTweets: int = 1000
+    maxTweets: int = 5000
     sinceId = None
     conn = mongo_connections[searchQuery]
 
@@ -63,7 +63,7 @@ def upload_tweets(api, searchQuery: str, ) -> None:
                 print("No more tweets found")
                 break
             for tweet in new_tweets:
-            # Upload to MongoDB collection
+                # Upload to MongoDB collection
                 conn.insert_one({'text': get_tweet(tweet._json)})
             tweetCount += len(new_tweets)
             print(f"Downloaded {tweetCount} tweets")
@@ -79,6 +79,6 @@ api = twitter_setup()
 
 print('Beginning Upload')
 for searchQuery in queries:
-    print(f'Tweets for '{searchQuery}')
+    print(f'Tweets for {searchQuery}')
     upload_tweets(api, searchQuery)
 print('Upload Complete')

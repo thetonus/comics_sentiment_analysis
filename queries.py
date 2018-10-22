@@ -1,8 +1,10 @@
-''' Twitter Handles to Query '''
+''' Creators to Query '''
+
 queries = set([
     'Tom King',
     'Scott Snyder',
     'James Tynion',
     'Joelle Jones',
-    'Geoff Johns'
-]) 
+    'Geoff Johns',
+    'James Robinson',
+])
