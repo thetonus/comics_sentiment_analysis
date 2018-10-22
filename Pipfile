@@ -20,7 +20,6 @@ ujson = "*"
 cython = "*"
 gunicorn = "*"
 pytest = "*"
-black = "*"
 
 [dev-packages]
 
