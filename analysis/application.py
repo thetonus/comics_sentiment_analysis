@@ -20,9 +20,7 @@ def app(handle: str) -> Tuple:
 
     conn = mongo_connections[handle]
 
-    tweet_text = [txt for txt in conn.find()]
-    df = pd.DataFrame(tweet_text)
-    del tweet_text  # Save memory by getting rid of big list
+    df = pd.DataFrame([txt for txt in conn.find()])
 
     # We create a column with the result of the analysis:
     df['SA'] = np.array([analyze_sentiment(tweet) for tweet in df['text']])

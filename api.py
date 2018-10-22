@@ -33,4 +33,4 @@ class TwitterSentiment(object):
 
 
 api = falcon.API()
-api.add_route('/creator', TwitterSentiment())
+api.add_route('/', TwitterSentiment())
