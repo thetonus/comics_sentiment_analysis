@@ -24,7 +24,7 @@ def get_tweet(tweet_json: Dict[str, str]) -> str:
     Get tweet from Twitter Api Resonse
 
     args
-        json - Twitter Api Response
+        dict - Twitter Api Response
 
     return
         str - text of tweet

@@ -7,6 +7,7 @@ from queries import queries
 
 
 class TwitterSentiment(object):
+    ''' Meat of api '''
 
     def on_get(self, req, resp):
         """ Handles GET requests """
@@ -24,13 +25,24 @@ class TwitterSentiment(object):
                     'neutral_percent': neu_percent,
                     'negative_percent': neg_percent
                 }
+                resp.body = ujson.dumps(result)
+                # return successful request
+                resp.status = falcon.HTTP_200 
             else:
                 result = {
-                    'error': f'{req.get_param("creator")} is not an acceptable twitter handle.'}
+                    'error': f'{req.get_param("creator")} is not a supported creator.'}
+                resp.body = ujson.dumps(result)
+                # return 406 if parameters are not acceptable
+                resp.status = falcon.HTTP_406 
         else:
-            result = {'error': 'No twitter handle to search'}
-        resp.body = ujson.dumps(result)
+            result = {'error': 'No query parameter'}
+            resp.body = ujson.dumps(result)
+            # return 404 if bad search
+            resp.status = falcon.HTTP_404 
 
+def create():
+    api = falcon.API()
+    api.add_route('/', TwitterSentiment())
+    return api
 
-api = falcon.API()
-api.add_route('/', TwitterSentiment())
+api = create()
