@@ -30,5 +30,5 @@ def get_tweet(tweet_json: Dict[str, str]) -> str:
         str - text of tweet
     '''
 
-    tweet_text = tweet_json['text']
+    tweet_text: str = tweet_json['text']
     return clean_tweet(tweet_text)

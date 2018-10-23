@@ -5,15 +5,8 @@ name = "pypi"
 
 [packages]
 tweepy = "*"
-pandas = "*"
-numpy = "*"
-matplotlib = "*"
 python-dotenv = "*"
-dask = "*"
-toolz = "*"
-cloudpickle = "*"
 textblob = "*"
-jsonpickle = "*"
 pymongo = "*"
 falcon = "*"
 ujson = "*"
@@ -21,6 +14,7 @@ cython = "*"
 gunicorn = "*"
 pytest = "*"
 nltk = "*"
+mypy = "*"
 
 [dev-packages]
 

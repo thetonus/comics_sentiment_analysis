@@ -1,5 +1,5 @@
 ''' Api for finding sentiment analysis of comic creators '''
-import json
+import ujson
 import falcon
 
 from analysis.application import app
@@ -29,7 +29,7 @@ class TwitterSentiment(object):
                     'error': f'{req.get_param("creator")} is not an acceptable twitter handle.'}
         else:
             result = {'error': 'No twitter handle to search'}
-        resp.body = json.dumps(result)
+        resp.body = ujson.dumps(result)
 
 
 api = falcon.API()

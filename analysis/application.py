@@ -31,9 +31,9 @@ def app(handle: str) -> Tuple:
     neg_tweets = [tweet for index, tweet in enumerate(
         tweets) if sentiment_scores[index] < 0]
 
-    length = len(tweets)
-    pos_percent = len(pos_tweets)*100/length
-    neu_percent = len(neu_tweets)*100/length
-    neg_percent = len(neg_tweets)*100/length
+    length: int = len(tweets)
+    pos_percent: float = len(pos_tweets)*100/length
+    neu_percent: float = len(neu_tweets)*100/length
+    neg_percent: float = len(neg_tweets)*100/length
 
     return handle, pos_percent, neu_percent, neg_percent
