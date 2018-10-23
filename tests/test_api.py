@@ -62,3 +62,9 @@ class TestApi(MyTestCase):
         query = {'creator': 'John Smith'}
         result = self.simulate_get('/', params=query)
         self.assertEqual(result.status, falcon.HTTP_406)
+
+    def test_unsupported_parameter(self):
+        ''' Test if given parameter is unsupported  '''
+        query = {'name': 'John Smith'}
+        result = self.simulate_get('/', params=query)
+        self.assertEqual(result.status, falcon.HTTP_404)
