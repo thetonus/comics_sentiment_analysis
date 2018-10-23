@@ -1,0 +1,12 @@
+language: python
+
+python:
+  - "3.6"
+
+install:
+  - pip install pipenv
+  - pipenv install
+
+script:
+  - python -m mypy . --ignore-missing-imports
+  - python -m pytest

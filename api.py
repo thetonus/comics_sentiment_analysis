@@ -27,22 +27,24 @@ class TwitterSentiment(object):
                 }
                 resp.body = ujson.dumps(result)
                 # return successful request
-                resp.status = falcon.HTTP_200 
+                resp.status = falcon.HTTP_200
             else:
                 result = {
                     'error': f'{req.get_param("creator")} is not a supported creator.'}
                 resp.body = ujson.dumps(result)
                 # return 406 if parameters are not acceptable
-                resp.status = falcon.HTTP_406 
+                resp.status = falcon.HTTP_406
         else:
             result = {'error': 'No query parameter'}
             resp.body = ujson.dumps(result)
             # return 404 if bad search
-            resp.status = falcon.HTTP_404 
+            resp.status = falcon.HTTP_404
+
 
 def create():
     api = falcon.API()
     api.add_route('/', TwitterSentiment())
     return api
+
 
 api = create()

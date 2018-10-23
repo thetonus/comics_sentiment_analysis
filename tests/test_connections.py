@@ -7,7 +7,7 @@ from settings import client as mongo_client
 
 def test_tweepy():
     ''' Make sure twitter_setup() is a valid tweepy.API instance '''
-    assert isinstance(twitter_setup(), tweepy.API) == True
+    assert isinstance(twitter_setup(), tweepy.API)
 
 
 def test_mongo():

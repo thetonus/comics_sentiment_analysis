@@ -1,7 +1,6 @@
 ''' Upload tweets of that mention certain comics creators '''
 import tweepy
 
-from exceptions import TweepyConnectionException
 from helpers.upload import get_tweet
 from settings import mongo_connections, twitter_credentials
 from queries import queries
@@ -19,11 +18,14 @@ def twitter_setup():
 
     # Authentication and access using keys:
     auth = tweepy.AppAuthHandler(
-        twitter_credentials["CONSUMER_KEY"], twitter_credentials["CONSUMER_SECRET"])
+        twitter_credentials["CONSUMER_KEY"],
+        twitter_credentials["CONSUMER_SECRET"]
+    )
     auth.secure = True
-    api = tweepy.API(auth, wait_on_rate_limit=True,
-                     wait_on_rate_limit_notify=True)
-
+    api = tweepy.API(auth,
+                     wait_on_rate_limit=True,
+                     wait_on_rate_limit_notify=True
+                     )
 
     return api
 
@@ -85,6 +87,7 @@ def main():
         print(f'Tweets for {searchQuery}')
         upload_tweets(api, searchQuery)
     print('Upload Complete')
+
 
 # Run program
 if __name__ == '__main__':

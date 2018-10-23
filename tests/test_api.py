@@ -51,12 +51,12 @@ class TestApi(MyTestCase):
         query = {'creator': 'James Robinson'}
         result = self.simulate_get('/', params=query)
         self.assertEqual(result.status, falcon.HTTP_200)
-    
+
     def test_no_creator_parameter(self):
         ''' Test if creator parameter is not present  '''
         result = self.simulate_get('/')
         self.assertEqual(result.status, falcon.HTTP_404)
-    
+        
     def test_unsupported_creator_parameter(self):
         ''' Test if creator parameter is unsupported  '''
         query = {'creator': 'John Smith'}
