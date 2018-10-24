@@ -1,5 +1,5 @@
 ''' Test API '''
-import api
+from api import api
 
 import falcon
 from falcon import testing
@@ -10,7 +10,7 @@ class MyTestCase(testing.TestCase):
 
     def setUp(self):
         super(MyTestCase, self).setUp()
-        self.app = api.create()
+        self.app = api
 
 
 class TestApi(MyTestCase):

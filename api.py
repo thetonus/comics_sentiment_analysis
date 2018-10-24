@@ -41,10 +41,6 @@ class TwitterSentiment(object):
             resp.status = falcon.HTTP_404
 
 
-def create():
-    api = falcon.API()
-    api.add_route('/', TwitterSentiment())
-    return api
+api = falcon.API()
+api.add_route('/', TwitterSentiment())
 
-if __name__ == '__main__':
-    api = create()
