@@ -2,7 +2,7 @@
 import ujson
 import falcon
 
-from analysis.application import app
+from analysis import app
 from queries import queries
 
 
