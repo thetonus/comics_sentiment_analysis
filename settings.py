@@ -2,16 +2,14 @@
 import os
 
 from collections import namedtuple
-from dotenv import load_dotenv, find_dotenv
+from dotenv import find_dotenv, load_dotenv
 from pymongo import MongoClient
 
 load_dotenv(find_dotenv())
 
 # Establishing Twitter Credentials
-TWITTER = namedtuple('CONSUMER_KEY',
-                     'CONSUMER_SECRET',
-                     'ACCESS_TOKEN',
-                     'ACCESS_SECRET')
+TWITTER = namedtuple(
+    'TWITTER', 'CONSUMER_KEY CONSUMER_SECRET ACCESS_TOKEN ACCESS_SECRET')
 
 twitter_credentials = TWITTER(os.getenv('TWITTER_CONSUMER_KEY'),
                               os.getenv('TWITTER_CONSUMER_SECRET'),
@@ -20,12 +18,9 @@ twitter_credentials = TWITTER(os.getenv('TWITTER_CONSUMER_KEY'),
                               )
 
 # Establishing Reddit Credentials
-REDDIT = namedtuple('CLIENT_ID',
-                    'CLIENT_SECRET',
-                    'USER_AGENT',
-                    'USERNAME',
-                    'PASSWORD')
-                    
+REDDIT = namedtuple(
+    'REDDIT', 'CLIENT_ID CLIENT_SECRET USER_AGENT USERNAME PASSWORD')
+
 reddit_credentials = REDDIT(os.getenv('REDDIT_CLIENT_ID'),
                             os.getenv('REDDIT_CLIENT_SECRET'),
                             os.getenv('REDDIT_USER_AGENT'),
