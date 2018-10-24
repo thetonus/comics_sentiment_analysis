@@ -46,5 +46,5 @@ def create():
     api.add_route('/', TwitterSentiment())
     return api
 
-
-api = create()
+if __name__ == '__main__':
+    api = create()

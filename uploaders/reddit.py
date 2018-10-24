@@ -19,7 +19,7 @@ def reddit_setup():
                          password=reddit_credentials.PASSWORD)
     return api
 
-def topic_top(conn, r_subreddit, query: str, limit: int):
+def topic_top(conn, r_subreddit, query: str, limit: int) -> None:
     ''' Seach the 'Top' category for top posts 
     
     args
@@ -128,11 +128,11 @@ def upload_posts(api, subreddits, query: str, limit: int = 1000) -> None:
         print('Seaching Controversial')
         topic_controversial(conn, r_subreddit, query, limit)
         
-def main():
+def reddit():
     api = reddit_setup()
 
     subreddits = ['comicbooks', 'DCcomics']
-    limit = 10**4
+    limit = 10**5
 
     # Upload tweets
     print('Beginning Upload')
@@ -145,4 +145,4 @@ def main():
 
 # Run program
 if __name__ == '__main__':
-    main()
+    reddit()
