@@ -4,21 +4,21 @@ import re
 from typing import Dict
 
 
-def clean_tweet(tweet_txt: str) -> str:
+def clean_text(text: str) -> str:
     '''
-    Utility function to clean the text in a tweet by removing
+    Utility function to clean text by removing
     links and special characters using regex.
 
     args
-        str - Text of the Tweet
+        text: str - text that needs to be cleaned
 
     return
-        str - Cleaned of the Tweet
+        str - Cleaned text
     '''
 
     return ' '.join(
         re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)",
-               " ", tweet_txt).split())
+               " ", text).split())
 
 
 def get_tweet(tweet_json: Dict[str, str]) -> str:
@@ -26,11 +26,11 @@ def get_tweet(tweet_json: Dict[str, str]) -> str:
     Get tweet from Twitter Api Resonse
 
     args
-        dict - Twitter Api Response
+        tweet_json: dict - Twitter Api Response
 
     return
         str - text of tweet
     '''
 
     tweet_text = tweet_json['text']
-    return clean_tweet(tweet_text)
+    return clean_text(tweet_text)
