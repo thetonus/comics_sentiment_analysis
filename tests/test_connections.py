@@ -2,8 +2,7 @@
 import tweepy
 import praw
 
-from upload.twitter import twitter_setup
-from upload.reddit import reddit_setup
+from uploaders import twitter_setup, reddit_setup
 from settings import client as mongo_client
 
 

@@ -1,3 +1,3 @@
 ''' Create Aliases for uploaders '''
-from .reddit import reddit
-from .twitter import twitter
+from .reddit import reddit, reddit_setup
+from .twitter import twitter, twitter_setup
