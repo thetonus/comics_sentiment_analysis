@@ -1,6 +1,5 @@
 ''' Upload reddit posts that mention certain comics creators '''
-import praw
-
+from praw import Reddit
 from helpers.upload import clean_text
 from settings import mongo_connections, reddit_credentials
 from queries import queries
@@ -10,18 +9,19 @@ def reddit_setup():
     ''' Create reddit instance 
 
     returns
-        reddit: praw.Reddit - Reddit instance'''
+        api: Reddit - Reddit instance'''
 
-    api = praw.Reddit(client_id=reddit_credentials.CLIENT_ID,
-                         client_secret=reddit_credentials.CLIENT_SECRET,
-                         user_agent=reddit_credentials.USER_AGENT,
-                         username=reddit_credentials.USERNAME,
-                         password=reddit_credentials.PASSWORD)
+    api = Reddit(client_id=reddit_credentials.CLIENT_ID,
+                 client_secret=reddit_credentials.CLIENT_SECRET,
+                 user_agent=reddit_credentials.USER_AGENT,
+                 username=reddit_credentials.USERNAME,
+                 password=reddit_credentials.PASSWORD)
     return api
 
-def topic_top(conn, r_subreddit, query: str, limit: int) -> None:
-    ''' Seach the 'Top' category for top posts 
-    
+
+def criteria_top(conn, r_subreddit, query: str, limit: int) -> None:
+    ''' Search the 'Top' criteria for top posts 
+
     args
         conn: MongoDB collection - collection for comic creator
         r_subreddit: Reddit subreddit instance - current subreddit
@@ -31,13 +31,15 @@ def topic_top(conn, r_subreddit, query: str, limit: int) -> None:
     subreddit_in_question = r_subreddit.top(limit=limit)
 
     for submission in subreddit_in_question:
+        # Clean text by removing links and special characters
         post = clean_text(submission.selftext)
         if query in post:
             conn.insert_one({'text': post})
 
-def topic_controversial(conn, r_subreddit, query: str, limit: int) -> None:
-    ''' Seach the 'Controversial' category for controversial posts 
-    
+
+def criteria_controversial(conn, r_subreddit, query: str, limit: int) -> None:
+    ''' Search the 'Controversial' criteria for controversial posts 
+
     args
         conn: MongoDB collection - collection for comic creator
         r_subreddit: Reddit subreddit instance - current subreddit
@@ -47,13 +49,15 @@ def topic_controversial(conn, r_subreddit, query: str, limit: int) -> None:
     subreddit_in_question = r_subreddit.controversial(limit=limit)
 
     for submission in subreddit_in_question:
+        # Clean text by removing links and special characters
         post = clean_text(submission.selftext)
         if query in post:
             conn.insert_one({'text': post})
 
-def topic_hot(conn, r_subreddit, query: str, limit: int) -> None:
-    ''' Seach the 'Hot' category for hot posts 
-    
+
+def criteria_hot(conn, r_subreddit, query: str, limit: int) -> None:
+    ''' Search the 'Hot' criteria for hot posts 
+
     args
         conn: MongoDB collection - collection for comic creator
         r_subreddit: Reddit subreddit instance - current subreddit
@@ -63,13 +67,15 @@ def topic_hot(conn, r_subreddit, query: str, limit: int) -> None:
     subreddit_in_question = r_subreddit.hot(limit=limit)
 
     for submission in subreddit_in_question:
+        # Clean text by removing links and special characters
         post = clean_text(submission.selftext)
         if query in post:
             conn.insert_one({'text': post})
 
-def topic_new(conn, r_subreddit, query: str, limit: int) -> None:
-    ''' Seach the 'New' category for new posts 
-    
+
+def criteria_new(conn, r_subreddit, query: str, limit: int) -> None:
+    ''' Search the 'New' criteria for new posts 
+
     args
         conn: MongoDB collection - collection for comic creator
         r_subreddit: Reddit subreddit instance - current subreddit
@@ -79,13 +85,15 @@ def topic_new(conn, r_subreddit, query: str, limit: int) -> None:
     subreddit_in_question = r_subreddit.new(limit=limit)
 
     for submission in subreddit_in_question:
+        # Clean text by removing links and special characters
         post = clean_text(submission.selftext)
         if query in post:
             conn.insert_one({'text': post})
 
-def topic_rising(conn, r_subreddit, query: str, limit: int) -> None:
-    ''' Seach the 'Rising' category for rising posts 
-    
+
+def criteria_rising(conn, r_subreddit, query: str, limit: int) -> None:
+    ''' Search the 'Rising' criteria for rising posts 
+
     args
         conn: MongoDB collection - collection for comic creator
         r_subreddit: Reddit subreddit instance - current subreddit
@@ -95,6 +103,7 @@ def topic_rising(conn, r_subreddit, query: str, limit: int) -> None:
     subreddit_in_question = r_subreddit.rising(limit=limit)
 
     for submission in subreddit_in_question:
+        # Clean text by removing links and special characters
         post = clean_text(submission.selftext)
         if query in post:
             conn.insert_one({'text': post})
@@ -117,17 +126,18 @@ def upload_posts(api, subreddits, query: str, limit: int = 1000) -> None:
         r_subreddit = api.subreddit(subreddit)
 
         # Get posts according to topics
-        print('Seaching Top')
-        topic_top(conn, r_subreddit, query, limit)
-        print('Seaching Rising')
-        topic_rising(conn, r_subreddit, query, limit)
-        print('Seaching New')
-        topic_new(conn, r_subreddit, query, limit)
-        print('Seaching Hot')
-        topic_hot(conn, r_subreddit, query, limit)
-        print('Seaching Controversial')
-        topic_controversial(conn, r_subreddit, query, limit)
-        
+        print('Searching Top')
+        criteria_top(conn, r_subreddit, query, limit)
+        print('Searching Rising')
+        criteria_rising(conn, r_subreddit, query, limit)
+        print('Searching New')
+        criteria_new(conn, r_subreddit, query, limit)
+        print('Searching Hot')
+        criteria_hot(conn, r_subreddit, query, limit)
+        print('Searching Controversial')
+        criteria_controversial(conn, r_subreddit, query, limit)
+
+
 def reddit():
     api = reddit_setup()
 
@@ -139,7 +149,7 @@ def reddit():
     for query in queries:
         print(f'\nPosts for {query}')
         upload_posts(api, subreddits, query, limit)
-        
+
     print('Upload Complete')
 
 

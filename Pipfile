@@ -17,6 +17,7 @@ nltk = "*"
 mypy = "*"
 pytest-mypy = "*"
 praw = "*"
+"bs4" = "*"
 
 [dev-packages]
 

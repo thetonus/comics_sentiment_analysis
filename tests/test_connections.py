@@ -1,7 +1,7 @@
 ''' Tests for connections in api '''
 import tweepy
-import praw
 
+from praw import Reddit
 from uploaders import twitter_setup, reddit_setup
 from settings import client as mongo_client
 
@@ -16,6 +16,7 @@ def test_mongo():
     db = mongo_client.get_database()
     assert db.name == 'heroku_v6ds7xrr'
 
-def test_reddit():  
+
+def test_reddit():
     ''' Make sure redit_setup() returns a valid praw.Reddit instance '''
-    assert isinstance(reddit_setup(), praw.Reddit)
+    assert isinstance(reddit_setup(), Reddit)
