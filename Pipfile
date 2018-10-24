@@ -16,6 +16,7 @@ pytest = "*"
 nltk = "*"
 mypy = "*"
 pytest-mypy = "*"
+praw = "*"
 
 [dev-packages]
 

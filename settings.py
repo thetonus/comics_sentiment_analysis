@@ -1,18 +1,36 @@
 ''' Getting credentials and initializing connections '''
 import os
 
+from collections import namedtuple
 from dotenv import load_dotenv, find_dotenv
 from pymongo import MongoClient
 
 load_dotenv(find_dotenv())
 
 # Establishing Twitter Credentials
-twitter_credentials = {
-    "CONSUMER_KEY": os.getenv('CONSUMER_KEY'),
-    "CONSUMER_SECRET": os.getenv('CONSUMER_SECRET'),
-    "ACCESS_TOKEN": os.getenv('ACCESS_TOKEN'),
-    "ACCESS_SECRET": os.getenv('ACCESS_SECRET'),
-}
+TWITTER = namedtuple('CONSUMER_KEY',
+                     'CONSUMER_SECRET',
+                     'ACCESS_TOKEN',
+                     'ACCESS_SECRET')
+
+twitter_credentials = TWITTER(os.getenv('TWITTER_CONSUMER_KEY'),
+                              os.getenv('TWITTER_CONSUMER_SECRET'),
+                              os.getenv('TWITTER_ACCESS_TOKEN'),
+                              os.getenv('TWITTER_ACCESS_SECRET')
+                              )
+
+# Establishing Reddit Credentials
+REDDIT = namedtuple('CLIENT_ID',
+                    'CLIENT_SECRET',
+                    'USER_AGENT',
+                    'USERNAME',
+                    'PASSWORD')
+                    
+reddit_credentials = REDDIT(os.getenv('REDDIT_CLIENT_ID'),
+                            os.getenv('REDDIT_CLIENT_SECRET'),
+                            os.getenv('REDDIT_USER_AGENT'),
+                            os.getenv('REDDIT_USERNAME'),
+                            os.getenv('REDDIT_PASSWORD'))
 
 # MongoDB Connection
 client = MongoClient(os.getenv('MONGODB_URI'))

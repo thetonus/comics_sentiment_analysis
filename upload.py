@@ -18,8 +18,8 @@ def twitter_setup():
 
     # Authentication and access using keys:
     auth = tweepy.AppAuthHandler(
-        twitter_credentials["CONSUMER_KEY"],
-        twitter_credentials["CONSUMER_SECRET"]
+        twitter_credentials.CONSUMER_KEY,
+        twitter_credentials.CONSUMER_SECRET
     )
     auth.secure = True
     api = tweepy.API(auth,

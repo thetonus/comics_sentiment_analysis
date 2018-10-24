@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8b5264f9a2329702c73a980f3ae8e5b5a1ba9ea69a2298a2a284d5cf0d42b9c2"
+            "sha256": "b6a751fee2a65785705029e7916b23c58194a3a638195dbd865af144ecdd7de8"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -144,6 +144,21 @@
                 "sha256:bde19360a8ec4dfd8a20dcb811780a30998101f078fc7ded6162f0076f50508f"
             ],
             "version": "==0.8.0"
+        },
+        "praw": {
+            "hashes": [
+                "sha256:ccd3463c838d912073c82cc226f7d62fb01aecf2f33dff3f0456afc688f45376",
+                "sha256:ead6a4cce623f9a5093965a98e4f4bb5463920c8e4a5caf19098c585d06bb507"
+            ],
+            "index": "pypi",
+            "version": "==6.0.0"
+        },
+        "prawcore": {
+            "hashes": [
+                "sha256:00bb9d61b5653a4614dce22eabe312e565aac08619d23a961bdcaf32367ed69a",
+                "sha256:a9e84be5c58daf62dc5f8f11563bf63484066d0f6e60a07be33678a8ccab804b"
+            ],
+            "version": "==1.0.0"
         },
         "py": {
             "hashes": [
@@ -300,6 +315,13 @@
             ],
             "index": "pypi",
             "version": "==1.35"
+        },
+        "update-checker": {
+            "hashes": [
+                "sha256:59cfad7f9a0ee99f95f1dfc60f55bf184937bcab46a7270341c2c33695572453",
+                "sha256:70e39446fccf77b21192cf7a8214051fa93a636dc3b5c8b602b589d100a168b8"
+            ],
+            "version": "==0.16"
         },
         "urllib3": {
             "hashes": [
