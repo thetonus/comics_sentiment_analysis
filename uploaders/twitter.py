@@ -43,7 +43,7 @@ def upload_tweets(api, searchQuery: str, ) -> None:
     tweetsPerQry: int = 100
     tweetCount: int = 0
     max_id = -1
-    maxTweets: int = 5000
+    maxTweets: int = 10**6
     sinceId = None
     conn = mongo_connections[searchQuery]
 

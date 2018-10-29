@@ -2,5 +2,7 @@
 from uploaders import twitter, reddit
 
 # Upload Content
-# twitter()
+print('Upload Twitter Content')
+twitter()
+print('Upload Reddit Content')
 reddit()

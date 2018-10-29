@@ -142,7 +142,7 @@ def reddit():
     api = reddit_setup()
 
     subreddits = ['comicbooks', 'DCcomics']
-    limit = 10**5
+    limit = 10**6
 
     # Upload tweets
     print('Beginning Upload')
