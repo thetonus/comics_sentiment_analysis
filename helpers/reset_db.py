@@ -6,8 +6,7 @@ from queries import queries
 
 def reset_db() -> None:
     ''' Reset MongoDB '''
+
     for query in queries:
         print(f'Delete {query} collection.')
         mongo_connections[query].drop()
-
-reset_db()

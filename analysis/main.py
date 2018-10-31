@@ -1,5 +1,5 @@
 ''' Main guts of sentiment analysis '''
-
+import numpy as np
 from typing import Tuple
 from settings import mongo_connections
 from queries import queries
@@ -7,39 +7,62 @@ from helpers.analyze import analyze_sentiment
 
 
 def app(handle: str) -> Tuple:
-    ''' Connect to mongodb to get tweets about creator 
-    and declare what if their tweets are positive, neutral, or negative
+    ''' Connect to mongodb to get posts about a creator
+    and declare those posts are positive, neutral, or negative
 
     args
-        str - handle: Twitter handle of creator in mind
+        str - handle: Name creator in mind
 
     returns
-        tuple - Returns twitter handle, and positive, neutral, and negative percentages of tweets
+         tuple - Returns name, 
+                    len of posts about person, 
+                    mean of postive posts,
+                    standard deviation of postive posts, 
+                    mean of neutral posts, 
+                    standard deviation of neutral posts, 
+                    mean of negative posts,
+                    standard deviation of negative posts,   
+
     '''
 
+    # Initialize
     conn = mongo_connections[handle]
+    posts = [doc['text'] for doc in conn.find()]
 
-    tweets = [doc['text'] for doc in conn.find()]
+    # We create a list with the result of the analysis:
+    sentiment_scores = list(map(analyze_sentiment, posts))
 
-    # We create a column with the result of the analysis:
-    sentiment_scores = list(map(analyze_sentiment, tweets))
+    # Each type of post
+    pos_posts, neu_posts, neg_posts = list(), list(), list()
 
-    # We construct lists with classified tweets:
-    pos_tweets = [tweet for index, tweet in enumerate(
-        tweets) if sentiment_scores[index] > 0]
-    neu_tweets = [tweet for index, tweet in enumerate(
-        tweets) if sentiment_scores[index] == 0]
-    neg_tweets = [tweet for index, tweet in enumerate(
-        tweets) if sentiment_scores[index] < 0]
+    # Collect sentiments for each type of post
+    for i in range(len(sentiment_scores)):
+        # Basic idea is one-hot encoding data at each index i
+        if sentiment_scores[i] == 3:
+            pos_posts.append(1)
+            neu_posts.append(0)
+            neg_posts.append(0)
+        if sentiment_scores[i] == 2:
+            neu_posts.append(1)
+            pos_posts.append(0)
+            neg_posts.append(0)
+        if sentiment_scores[i] == 1:
+            neg_posts.append(1)
+            pos_posts.append(0)
+            neu_posts.append(0)
 
     try:
-        length = len(tweets)
-        pos_percent = len(pos_tweets)*100/length
-        neu_percent = len(neu_tweets)*100/length
-        neg_percent = len(neg_tweets)*100/length
-    except ZeroDivisionError:
-        # There are no tweets. So return 0%
-        # for positive, neutral, and negative percents
-        pos_percent, neu_percent, neg_percent = 0, 0, 0
+        # Calculate mean and std of posts
+        pos_mean, pos_std = np.mean(pos_posts), np.std(pos_posts)
+        neu_mean, neu_std = np.mean(neu_posts), np.std(neu_posts)
+        neg_mean, neg_std = np.mean(neg_posts), np.std(neg_posts)
 
-    return handle, pos_percent, neu_percent, neg_percent
+    except ZeroDivisionError:
+        # There are no posts. So return 0 for means and std
+        pos_mean, pos_std = 0, 0
+        neu_mean, neu_std = 0, 0
+        neg_mean, neg_std = 0, 0
+
+    data = (handle, len(posts), pos_mean, pos_std,
+            neu_mean, neu_std, neg_mean, neg_std)
+    return data

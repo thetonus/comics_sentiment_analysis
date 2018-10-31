@@ -13,13 +13,13 @@ def analyze_sentiment(tweet: str) -> int:
         str - Text of tweet
 
     returns
-        int - sentiment analysis score
+        int - sentiment analysis score (scale from 1-3)
     '''
 
     analysis = TextBlob(tweet)
     if analysis.sentiment.polarity > 0:
-        return 1
+        return 3
     elif analysis.sentiment.polarity == 0:
-        return 0
+        return 2
     else:
-        return -1
+        return 1

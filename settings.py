@@ -31,6 +31,7 @@ reddit_credentials = REDDIT(os.getenv('REDDIT_CLIENT_ID'),
 client = MongoClient(os.getenv('MONGODB_URI'))
 mongo = client.heroku_v6ds7xrr
 
+# Upload Tweets and Posts
 mongo_connections = {
     'Tom King': mongo.t_king,
     'Scott Snyder': mongo.s_snyder,
@@ -38,4 +39,14 @@ mongo_connections = {
     'Joelle Jones': mongo.j_jones,
     'Geoff Johns': mongo.g_johns,
     'James Robinson': mongo.j_robinson,
+}
+
+# Upload stats on each writer
+mongo_connections_stats = {
+    'Tom King': mongo.t_king_stats,
+    'Scott Snyder': mongo.s_snyder_stats,
+    'James Tynion': mongo.j_t4_stats,
+    'Joelle Jones': mongo.j_jones_stats,
+    'Geoff Johns': mongo.g_johns_stats,
+    'James Robinson': mongo.j_robinson_stats,
 }
