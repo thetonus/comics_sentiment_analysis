@@ -4,18 +4,17 @@ from helpers.reset_db import reset_db
 from stats import upload_stats
 from queries import queries
 
-def main():
-    # Upload statistics data
-    for query in queries:
-        upload_stats(query)
+# Upload statistics data
+for query in queries:
+    upload_stats(query)
 
-    # Delete Previous data
-    reset_db()
+# Delete Previous data
+reset_db()
 
-    # Upload Content
+# Upload Content
 
-    print('Upload Twitter Content')
-    twitter()
+print('Upload Twitter Content')
+twitter()
 
-    print('Upload Reddit Content')
-    reddit()
+print('Upload Reddit Content')
+reddit()
