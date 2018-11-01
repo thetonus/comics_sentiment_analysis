@@ -31,7 +31,7 @@ def upload_stats(query: str, test: bool = False) -> Dict[str, str]:
     '''
     # Retrieve current time
     now = datetime.datetime.now()
-    current = now.strftime("%Y-%m-%d %H")
+    current = now.strftime("%Y-%m-%d %H: %M")
 
     # Begin upload of statistics
     print(f'Begin Upload of {query} stats')
@@ -63,7 +63,15 @@ def upload_stats(query: str, test: bool = False) -> Dict[str, str]:
     return result
 
 def retrieve_stats(query: str) -> Dict[str, str]:
-    ''' Retrieve stats on creators '''
+    ''' Retrieve stats on creators 
+    
+    args
+        str (query) - name you want to query
 
-    # Should retrieve saved stats from MongoDB
-    pass
+    returns
+        dict - stats from mongo
+    '''
+
+    conn = mongo_connections_stats[query]
+    return conn.find_one()
+

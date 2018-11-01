@@ -4,31 +4,23 @@ import falcon
 
 from analysis import app
 from queries import queries
-# from stats import retrieve_stats
+from stats import retrieve_stats
 
 class ComicsWritersSentiment(object):
     ''' Meat of api '''
 
     def on_get(self, req, resp):
         """ Handles GET requests """
+        
         # Check to see if user entered a creator to search
         try:
             if req.get_param("creator"):
                 #  Check to make sure user's input is a legit creator
                 if req.get_param("creator") in queries:
 
-                    data = app(req.get_param("creator"))
+                    result = retrieve_stats(req.get_param("creator"))
+                    result.pop('_id', None) # Delete ID field
 
-                    result = {
-                        'creator': data[0],
-                        'total tweets': data[1],
-                        'postive_mean': data[2],
-                        'postive_std': data[3],
-                        'neutral_mean': data[4],
-                        'neutral_std': data[5],
-                        'negative_mean': data[6],
-                        'negative_std': data[7],
-                    }
                     resp.body = ujson.dumps(result)
                     # return successful request
                     resp.status = falcon.HTTP_200
@@ -43,6 +35,7 @@ class ComicsWritersSentiment(object):
                 resp.body = ujson.dumps(result)
                 # return 404 if bad search
                 resp.status = falcon.HTTP_404
+        
         # Shit Catcher
         except Exception as e:
             result = {'error': str(e)}
