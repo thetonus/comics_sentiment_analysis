@@ -28,16 +28,13 @@ def upload_stats(query: str, test: bool = False) -> Dict[str, str]:
         bool (test) - If in test mode, it does not submit 
             new stats data to MongoDB
     '''
-    # Retrieve current time
-    now = datetime.datetime.now()
-    current = now.strftime("%Y-%m-%d %H: %M")
 
     # Begin upload of statistics
     print(f'Begin Upload of {query} stats')
     data = app(query)
 
     result = {
-        'time': current,
+        'time': datetime.datetime.now(),
         'creator': data[0],
         'total tweets': data[1],
         'postive_mean': data[2],
