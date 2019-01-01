@@ -34,7 +34,7 @@ def upload_stats(query: str, test: bool = False) -> Dict[str, str]:
     data = app(query)
 
     result = {
-        'time': datetime.datetime.now(),
+        'time': datetime.datetime.utcnow(),
         'creator': data[0],
         'total tweets': data[1],
         'postive_mean': data[2],
