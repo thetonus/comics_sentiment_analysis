@@ -1,4 +1,4 @@
-''' Helper functions '''
+''' Helper function for sentiment analysis '''
 
 from textblob import TextBlob
 from queries import queries

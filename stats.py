@@ -1,6 +1,5 @@
 ''' Upload stats to MongoDB '''
 import datetime
-import json
 
 from analysis import app
 from queries import queries
@@ -60,7 +59,6 @@ def upload_stats(query: str, test: bool = False) -> Dict[str, str]:
     conn.insert_one(result)
     
     print('End Upload')
-    return result
 
 def retrieve_stats(query: str) -> Dict[str, str]:
     ''' Retrieve stats on creators 

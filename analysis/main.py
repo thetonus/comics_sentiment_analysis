@@ -38,18 +38,18 @@ def app(handle: str) -> Tuple:
     # Collect sentiments for each type of post
     for i in range(len(sentiment_scores)):
         # Basic idea is one-hot encoding data at each index i
-        if sentiment_scores[i] == 3:
+        if sentiment_scores[i] == 1:
             pos_posts.append(1)
             neu_posts.append(0)
             neg_posts.append(0)
-        if sentiment_scores[i] == 2:
-            neu_posts.append(1)
+        if sentiment_scores[i] == 0:
             pos_posts.append(0)
+            neu_posts.append(1)
             neg_posts.append(0)
-        if sentiment_scores[i] == 1:
-            neg_posts.append(1)
+        if sentiment_scores[i] == -1:
             pos_posts.append(0)
             neu_posts.append(0)
+            neg_posts.append(1)
 
     try:
         # Calculate mean and std of posts
@@ -58,7 +58,8 @@ def app(handle: str) -> Tuple:
         neg_mean, neg_std = np.mean(neg_posts), np.std(neg_posts)
 
     except ZeroDivisionError:
-        # There are no posts. So return 0 for means and std
+        # If there are no posts (which will be rare, if ever), 
+        #    return 0 for means and stds
         pos_mean, pos_std = 0, 0
         neu_mean, neu_std = 0, 0
         neg_mean, neg_std = 0, 0
