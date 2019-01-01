@@ -21,6 +21,7 @@ requests = "*"
 "basc-py4chan" = "*"
 selenium = "*"
 lxml = "*"
+numpy = "*"
 
 [dev-packages]
 
